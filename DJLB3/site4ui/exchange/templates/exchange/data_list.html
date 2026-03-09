@@ -1,0 +1,56 @@
+{% extends 'exchange/base.html' %}
+
+{% block content %}
+<h2>Данные о курсах валют</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Добавить запись</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Существующие записи</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Биржа</th>
+                            <th>Курс USD</th>
+                            <th>Источник</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in data %}
+                        <tr>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.get_exchange_display }}</td>
+                            <td>{{ item.rate }}</td>
+                            <td>{{ item.source }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">Нет данных</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

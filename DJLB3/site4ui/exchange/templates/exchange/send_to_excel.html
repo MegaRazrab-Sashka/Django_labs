@@ -1,0 +1,60 @@
+{% extends 'exchange/base.html' %}
+
+{% block content %}
+<h2>Отправка данных в Excel через OLE</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Настройки подключения к Excel</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    
+                    <div class="alert alert-info">
+                        <strong>Процесс:</strong>
+                        <ol>
+                            <li>Загрузка последнего экспортированного файла</li>
+                            <li>Усреднение курса по датам</li>
+                            <li>Открытие Excel через OLE интерфейс</li>
+                            <li>Заполнение ячеек данными</li>
+                            <li>Обновление диаграммы</li>
+                        </ol>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">Отправить в Excel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Подготовка Excel</h5>
+            </div>
+            <div class="card-body">
+                <p>Создайте файл Excel с:</p>
+                <ol>
+                    <li>Таблицей для данных (например, колонки A:B)</li>
+                    <li>Диаграммой, построенной по этим данным</li>
+                    <li>Сохраните файл по указанному пути</li>
+                </ol>
+                
+                <h6>Пример структуры:</h6>
+                <pre>
+    A           B
+1   Дата       Курс
+2   2024-01-01 75.5
+3   2024-01-02 76.2
+                </pre>
+                
+                <p class="text-muted">Диаграмма будет автоматически обновляться при изменении данных.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

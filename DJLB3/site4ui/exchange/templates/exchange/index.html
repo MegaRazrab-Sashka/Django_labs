@@ -1,0 +1,91 @@
+{% extends 'exchange/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron bg-light p-5 rounded">
+            <h1 class="display-4">Система обмена данными</h1>
+            <p class="lead">Демонстрация обмена данными между тремя программами</p>
+            <hr class="my-4">
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5>Программа-источник</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Генерирует данные о курсе валют</p>
+                            <ul>
+                                <li>Создание структуры данных</li>
+                                <li>Редактирование полей</li>
+                                <li>Генерация тестовых данных</li>
+                                <li>Экспорт в файл</li>
+                            </ul>
+                            <a href="{% url 'structure_list' %}" class="btn btn-primary">Управление структурой</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5>Программа-сервер</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Загружает и обрабатывает данные</p>
+                            <ul>
+                                <li>Загрузка из файла</li>
+                                <li>Усреднение по датам</li>
+                                <li>Передача в Excel через OLE</li>
+                            </ul>
+                            <a href="{% url 'send_to_excel' %}" class="btn btn-success">Отправить в Excel</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h5>Программа-визуализатор</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Microsoft Excel с диаграммой</p>
+                            <ul>
+                                <li>Динамическое обновление</li>
+                                <li>Построение графика курса</li>
+                                <li>Визуальный анализ</li>
+                            </ul>
+                            <button class="btn btn-info" onclick="window.open('{{ excel_file }}')">Открыть Excel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h4>Последний экспорт данных</h4>
+                {% with last_export=view_last_export %}
+                    {% if last_export %}
+                        <table class="table">
+                            <tr>
+                                <th>Дата экспорта:</th>
+                                <td>{{ last_export.created_at }}</td>
+                            </tr>
+                            <tr>
+                                <th>Количество записей:</th>
+                                <td>{{ last_export.data|length }}</td>
+                            </tr>
+                            <tr>
+                                <th>Файл:</th>
+                                <td>{{ last_export.file_path }}</td>
+                            </tr>
+                        </table>
+                    {% else %}
+                        <p class="text-muted">Нет экспортированных данных</p>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

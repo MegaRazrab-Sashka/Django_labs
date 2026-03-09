@@ -1,0 +1,39 @@
+{% extends 'exchange/base.html' %}
+
+{% block content %}
+<h2>Генерация тестовых данных</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Параметры генерации</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Сгенерировать</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Информация</h5>
+            </div>
+            <div class="card-body">
+                <p>Будут сгенерированы данные о курсе доллара США:</p>
+                <ul>
+                    <li>Случайные колебания вокруг базового курса 75 руб.</li>
+                    <li>Для каждой даты по всем выбранным биржам</li>
+                    <li>Случайный источник информации</li>
+                </ul>
+                <p class="text-muted">Старые данные будут удалены.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
